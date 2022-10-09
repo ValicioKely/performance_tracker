@@ -4,10 +4,11 @@ const  authController =  require("../controllers/auth.controller");
 
 
 //connect to database
+require('../config/db');
 
 
 //authController
-router.post('/register', authController.newUser);
+router.post('/register', authController.signUp);
 
 
 
