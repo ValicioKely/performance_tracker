@@ -1,9 +1,12 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 require('dotenv').config();
 const userRoutes = require('./routes/user.routes')
 //connect to database
 require('./config/db');
+
+app.use(bodyParser.json());
 
 
 //User
