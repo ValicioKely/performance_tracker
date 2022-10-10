@@ -15,8 +15,12 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 //User
-app.use('/api/user' , userRoutes);
 app.get("*" , middleware.checkToken);
+app.get("/tokenid" , middleware.authGuard , (req ,res) => {
+    res.status(200).send(res.locals.user.id)
+}  );
+app.use('/api/user' , userRoutes);
+
 
 
 app.listen(process.env.PORT , () => {
