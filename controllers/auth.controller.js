@@ -1,7 +1,7 @@
 const UserModel = require('../models/user.model');
 const {signUpError} = require('../utils/signUp.error')
 
-exports.signUp = function (req , res) {
+exports.signUp = async function (req , res) {
     const {username , email , password} = req.body;
     
     try {
