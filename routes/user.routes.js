@@ -16,5 +16,8 @@ router.get('/logout', authController.signOut);
 //userController
 router.get('/', userController.getAllUser);
 router.get('/:id', userController.userInfo);
+router.post('/:id' , userController.updateUser);
+router.delete('/:id' , userController.deleteUser);
+
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const { ObjectId } = require('mongodb');
+const { set } = require('mongoose');
 const userModel = require('../models/user.model');
 
 
@@ -14,4 +15,50 @@ exports.userInfo = async function (req , res) {
     }
     const user = await userModel.findById(req.params.id).select("-password");
     res.status(200).json({user});
+}
+
+
+exports.updateUser = async function (req , res) {
+    if(!ObjectId.isValid(req.params.id)){
+        console.log (`ID unknwon ${req.params.id}`)
+    }
+    await userModel.findOneAndUpdate(
+        {_id : req.params.id },
+        {
+            $set : {
+                username : req.body.username,
+            }
+        },
+        (err, docs) => {
+            if(err) {
+                console.log("failed to edit " + err);
+            }
+            else{
+                res.status(200).send(docs);
+            }
+        }
+        );
+}
+
+
+exports.deleteUser = async function (req , res) {
+    if(!ObjectId.isValid(req.params.id)){
+        console.log (`ID unknwon ${req.params.id}`)
+    }
+    await userModel.findOneAndUpdate(
+        {_id : req.params.id},
+        {
+            $addToSet :{
+                isDeleted : true
+            }
+        },
+        (err, docs) => {
+            if(err){
+                console.log("failed to delete user" + err);
+            }
+            else{
+                res.status(200).send(docs);
+            }
+        }
+    )
 }

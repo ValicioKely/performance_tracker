@@ -37,6 +37,7 @@ UserSchema.pre("save", async function (next) {
     next();
 });
 
+//access to login method via authcontroller
 UserSchema.statics.login = async function(email, password) {
     const user = await this.findOne({ email });
     if (user) {
