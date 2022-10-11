@@ -3,8 +3,6 @@ const userController =  require("../controllers/user.controller");
 const  authController =  require("../controllers/auth.controller");
 
 
-//connect to database
-require('../config/db');
 
 
 //authController
