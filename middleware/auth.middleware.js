@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const userModel = require('../models/user.model');
 
 
-
+//check if the user is connected to all route
 exports.checkToken = async function (req , res ,next) {
     const token = req.cookies.jwt;
     if(token){
@@ -26,7 +26,7 @@ exports.checkToken = async function (req , res ,next) {
     }
 };
 
-
+//check if the user is already connected 
 module.exports.authGuard = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {

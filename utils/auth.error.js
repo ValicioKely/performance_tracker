@@ -1,7 +1,7 @@
 exports.signUpError = function (err) {
-    console.log(`erreur de registration ${err}`);
+    console.log(`registration failed ${err}`);
 }
 
 exports.signInError = function (err) {
-    console.log(`erreur de connexion ${err}`);
+    console.log(`login failed ${err}`);
 }
