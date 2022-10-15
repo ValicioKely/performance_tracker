@@ -16,27 +16,12 @@ exports.userInfo = async function (req , res) {
     res.status(200).json({user});
 }
 
-
+// à faire
 exports.updateUser = async function (req , res) {
     if(!ObjectId.isValid(req.params.id)){
         console.log (`ID unknwon ${req.params.id}`)
-    }
-    await userModel.findOneAndUpdate(
-        {_id : req.params.id },
-        {
-            $set : {
-                username : req.body.username,
-            }
-        },
-        (err, docs) => {
-            if(err) {
-                console.log("failed to edit " + err);
-            }
-            else{
-                res.status(200).send(docs);
-            }
-        }
-        );
+    };
+    console.log("update user");
 }
 
 

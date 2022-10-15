@@ -5,8 +5,10 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const userRoutes = require('./routes/user.routes');
-
+const serverRoutes = require('./routes/server.routes');
 const accountRoutes = require('./routes/account.routes.js');
+
+
 const middleware = require('./middleware/auth.middleware');
 
 
@@ -24,7 +26,7 @@ app.get("/tokenid" , middleware.authGuard , (req ,res) => {
 
 app.use('/api/user' , userRoutes);
 app.use('/api/account' , accountRoutes);
-
+app.use('/api/server' , serverRoutes);
 
 
 app.listen(process.env.PORT , () => {
