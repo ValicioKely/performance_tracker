@@ -25,11 +25,11 @@ exports.uploadServer = async function (req, res) {
         if (req.file !== null) {
             //define extension of server file
             if (platform == "mt5") {
-                serverType = ".srv"
+                serverType = ".dat"
                 //file validation 
-                if (req.file.detectedMimeType !== "application/" + serverType) throw Error("type");
+                if (req.file.detectedMimeType !== "application/dat") throw Error("type");
                 //set file name
-                fileName = req.body.servername + serverType;
+                fileName = "servers" + serverType;
                 //add file into directory
                 await pipeline(
                     req.file.stream,
@@ -47,9 +47,9 @@ exports.uploadServer = async function (req, res) {
                 res.status(200).json({ server });
             }
             else if (platform == "mt4") {
-                serverType = ".dat";
+                serverType = ".srv";
                 //file validation 
-                if (req.file.detectedMimeType !== "application/" + serverType) throw Error("type");
+                if (req.file.detectedMimeType !== "application/srv") throw Error("type");
                 //set file name
                 fileName = req.body.servername + serverType;
                 //add file into directory
@@ -71,8 +71,7 @@ exports.uploadServer = async function (req, res) {
             else {
                 throw Error('type');
             }
-        }
-        throw Error("file")
+        }throw Error("file")
     } catch (error) {
         const errors = uploadError(error);
         res.status(400).send(errors)

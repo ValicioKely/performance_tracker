@@ -8,12 +8,19 @@ const api = new MetaApi(token);
 
 //a faire
 //get Provisioning id from database
-async function getProvisioningProfileId(sevvername) {
-    
+async function getProvisioningProfileId(serverName) {
+    const profiles = await api.provisioningProfileApi.getProvisioningProfiles();
+
+    // create test MetaTrader account profile
+    let profile = profiles.find(p => p.name === serverName);
+    const provisioningProfileId = profile._data._id ;
+    console.log(provisioningProfileId);
+    return provisioningProfileId ;
 }
 
 //create a trading account 
 exports.signUp = async function (req, res) {
+
     const { name, platform, login, broker, investPassword, server } = req.body;
     try {
 
@@ -24,7 +31,7 @@ exports.signUp = async function (req, res) {
             login: login,
             password: investPassword,
             server: server,
-            provisioningProfileId: provisioningProfile.id,
+            provisioningProfileId: provisioningProfile,
             platform: platform,
             application: 'MetaApi',
             magic: 1000
@@ -39,7 +46,7 @@ exports.signUp = async function (req, res) {
             investPassword: investPassword,
             server: server
         });
-        res.status(200).json({ account: account._id })
+        res.status(200).json({ account: account.name })
     } catch (error) {
         const errors = signUpError(error);
         res.status(400).send(errors);
@@ -47,14 +54,9 @@ exports.signUp = async function (req, res) {
 }
 //get account information
 exports.accountInfo = async function (req, res) {
-    if (!ObjectId.isValid(req.params.id)) {
-        console.log(`ID unknwon ${req.params.id}`)
-    }
-    const account = await userModel.findById(req.params.id).select("-password");
-    
     //fetch account via api
-    //const accountId = login.login;
-    //const account = await api.metatraderAccountApi.getAccount(accountId);
+    const accountId = login.login;
+    const account = await api.metatraderAccountApi.getAccount(accountId);
     res.status(200).json({ account });
 }
 
