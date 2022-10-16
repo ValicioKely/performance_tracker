@@ -1,6 +1,10 @@
 const serverModel = require('../models/server.model');
 const { uploadError } = require('../utils/upload.error');
 let MetaApi = require('metaapi.cloud-sdk').default;
+const fs = require('fs');
+const util = require('util');
+const stream = require('stream');
+const  pipeline = util.promisify(stream.pipeline);
 
 let token = process.env.TOKEN;
 const api = new MetaApi(token);
