@@ -6,16 +6,18 @@ const accountSchema = new mongoose.Schema(
       name: {
         type : String ,
         required : true, 
+        unique: true
+      },
+      platform : {
+        type:  String,
+        required: true
       },
       login: {
         type: String,
         required: true, 
         minLength: 5,
+        unique: true
     },
-      broker: {
-        type: String,
-        required: true,
-      },
       investPassword:{
         type: String,
         required: true,

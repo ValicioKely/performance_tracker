@@ -9,7 +9,6 @@ function createToken(id) {
     
 }
 
-
 exports.signUp = async function (req , res) {
     const {username , email , password} = req.body;
     
@@ -18,8 +17,8 @@ exports.signUp = async function (req , res) {
         res.status(200).json({user: user._id});
         
     } catch (error) {
-        signUpError(error);
-        res.status(400);
+        const errors = signUpError(error);
+        res.status(400).send(errors);
     }
 }
 
@@ -32,8 +31,8 @@ exports.signIn = async function (req , res) {
         res.cookie('jwt' , token , {maxAge});
         res.status(200).json({user: user._id});
     } catch (error) {
-        signInError(error);
-        res.status(400);
+        const errors = signInError(error);
+        res.status(400).send(errors);
     }
 }
 
