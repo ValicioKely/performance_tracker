@@ -10,29 +10,27 @@ const api = new MetaApi(token);
 //get Provisioning id from database
 async function getProvisioningProfileId(serverName) {
     const profiles = await api.provisioningProfileApi.getProvisioningProfiles();
-
-    // create test MetaTrader account profile
     let profile = profiles.find(p => p.name === serverName);
     const provisioningProfileId = profile._data._id ;
-    console.log(provisioningProfileId);
     return provisioningProfileId ;
 }
 
 //create a trading account 
 exports.signUp = async function (req, res) {
 
-    const { name, platform, login, broker, investPassword, server } = req.body;
+    const { name, platform, login, broker, userPassord, server } = req.body;
     try {
 
         const provisioningProfile = await getProvisioningProfileId(broker);
+        console.log(provisioningProfile);
         //Adding MT account to MetaApi
-        account = await api.metatraderAccountApi.createAccount({
+        const account = await api.metatraderAccountApi.createAccount({
             name: name,
             login: login,
-            password: investPassword,
-            server: server,
-            provisioningProfileId: provisioningProfile,
-            platform: platform,
+            password: userPassword ,
+            server: 'Justforex-live',
+            provisioningProfileId: "81b56950-4ecb-4fe4-b2dd-629363f329f2",
+            platform: "mt5",
             application: 'MetaApi',
             magic: 1000
         });
@@ -43,7 +41,7 @@ exports.signUp = async function (req, res) {
             platform: platform,
             login: login,
             broker: broker,
-            investPassword: investPassword,
+            investPassword: userPassword,
             server: server
         });
         res.status(200).json({ account: account.name })
@@ -55,16 +53,16 @@ exports.signUp = async function (req, res) {
 //get account information
 exports.accountInfo = async function (req, res) {
     //fetch account via api
-    const accountId = login.login;
+    const accountId = req.params.id;
     const account = await api.metatraderAccountApi.getAccount(accountId);
     res.status(200).json({ account });
 }
 
+
 //get all account
 exports.getAllAccount = async function (req, res) {
-    const accounts = await api.metatraderAccountApi.getAccounts();
     //Fetch accounts via api
-    //const accounts = await api.metatraderAccountApi.getAccounts();
+   const accounts = await api.metatraderAccountApi.getAccounts();
     res.status(200).json({ accounts });
 }
 

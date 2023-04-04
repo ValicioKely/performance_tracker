@@ -23,8 +23,7 @@ exports.signUp = async function (req , res) {
 }
 
 exports.signIn = async function (req , res) {
-    const {email , password} = req.body;
-    
+    const {email , password} = req.body;    
     try {
         const user = await userModel.login(email , password);
         const token = createToken(user._id);
